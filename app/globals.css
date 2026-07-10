@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+* {
+  border-color: rgb(23 27 31 / 0.08);
+}
+
+body {
+  background-color: #F3F4F6;
+  color: #171B1F;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.dark body {
+  background-color: #171B1F;
+  color: #F3F4F6;
+}
+
+/* Visible keyboard focus everywhere -- never suppressed */
+:focus-visible {
+  outline: 2px solid #2954A5;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fine tick-mark rule, used as a recurring instrument-panel motif */
+.tick-rule {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(23, 27, 31, 0.14) 0,
+    rgba(23, 27, 31, 0.14) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  height: 6px;
+}
+
+.dial-track {
+  stroke: rgba(23, 27, 31, 0.08);
+}
+
+html.dark .dial-track {
+  stroke: rgba(243, 244, 246, 0.1);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
