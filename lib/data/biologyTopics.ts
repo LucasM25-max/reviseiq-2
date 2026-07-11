@@ -2,7 +2,7 @@ export interface BiologyTopic {
   code: string;
   name: string;
   paper: 1 | 2;
-  color: string; // hex, matches tailwind.config.ts `topic` scale
+  color: string; // hex, default palette -- see topicColorsSafe for the alt palette
 }
 
 // AQA GCSE Biology (8461 / 8464 shared content) -- the seven specification
@@ -19,6 +19,24 @@ export const biologyTopics: BiologyTopic[] = [
   { code: "4.6", name: "Inheritance, variation and evolution", paper: 2, color: "#6B4C93" },
   { code: "4.7", name: "Ecology", paper: 2, color: "#3E8259" },
 ];
+
+// Colour-blind-safe alternative, based on the Okabe-Ito palette, chosen so
+// all seven topics stay distinguishable under the common forms of colour
+// vision deficiency. Swapped in via topicColor() when the preference is on.
+const topicColorsSafe: Record<string, string> = {
+  "4.1": "#0072B2",
+  "4.2": "#E69F00",
+  "4.3": "#009E73",
+  "4.4": "#D55E00",
+  "4.5": "#56B4E9",
+  "4.6": "#CC79A7",
+  "4.7": "#000000",
+};
+
+export function topicColor(code: string, colorBlindSafe: boolean): string {
+  if (colorBlindSafe) return topicColorsSafe[code] ?? "#5B6470";
+  return biologyTopics.find((t) => t.code === code)?.color ?? "#5B6470";
+}
 
 export interface FeatureModule {
   slug: string;
@@ -61,11 +79,6 @@ export const biologyModules: FeatureModule[] = [
     slug: "command-words",
     name: "Command words",
     description: "Train the difference between describe, explain, evaluate and calculate.",
-  },
-  {
-    slug: "timetable",
-    name: "Revision timetable",
-    description: "A schedule generated from your mastery data and your exam dates.",
   },
 ];
 

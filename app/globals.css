@@ -20,11 +20,28 @@ body {
   font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 html.dark body {
   background-color: #171B1F;
   color: #F3F4F6;
+}
+
+/* Dyslexia-friendly font, toggled from Account > Accessibility */
+body.dyslexia-font,
+body.dyslexia-font * {
+  font-family: var(--font-dyslexic), sans-serif !important;
+}
+
+/* Text scale, toggled from Account > Accessibility. Scales the root
+   font-size so Tailwind's rem-based type scale cascades everywhere. */
+html.text-scale-large {
+  font-size: 112.5%;
+}
+
+html.text-scale-xl {
+  font-size: 125%;
 }
 
 /* Visible keyboard focus everywhere -- never suppressed */

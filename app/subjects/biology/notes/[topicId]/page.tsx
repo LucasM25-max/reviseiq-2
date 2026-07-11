@@ -7,10 +7,12 @@ import { ModuleHeader } from "@/components/ui/ModuleHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { biologyTopics } from "@/lib/data/biologyTopics";
+import { biologyTopics, topicColor } from "@/lib/data/biologyTopics";
+import { useBrain } from "@/lib/store";
 
 export default function TopicNotesPage() {
   const params = useParams<{ topicId: string }>();
+  const { state } = useBrain();
   const topic = biologyTopics.find((t) => t.code === params.topicId);
 
   return (
@@ -26,7 +28,7 @@ export default function TopicNotesPage() {
           {topic && (
             <span
               className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: topic.color }}
+              style={{ backgroundColor: topicColor(topic.code, state.preferences.colorBlindSafe) }}
               aria-hidden
             />
           )}

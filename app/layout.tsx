@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Sans, IBM_Plex_Mono, Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
 import { BrainProvider } from "@/lib/store";
 
@@ -22,6 +22,14 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+// Accessibility alternative font -- designed for reading clarity, toggled
+// on from Account > Accessibility. See globals.css `.dyslexia-font`.
+const dyslexic = Atkinson_Hyperlegible({
+  subsets: ["latin"],
+  variable: "--font-dyslexic",
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
   title: "ReviseIQ — GCSE revision, precisely measured",
   description:
@@ -30,7 +38,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable} ${dyslexic.variable}`}
+    >
       <body className="font-sans antialiased">
         <BrainProvider>{children}</BrainProvider>
       </body>

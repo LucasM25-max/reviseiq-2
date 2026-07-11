@@ -35,7 +35,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between mb-10">
           <div>
             <p className="text-sm text-slate">Welcome back</p>
-            <h1 className="font-display text-2xl font-semibold text-graphite">
+            <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper">
               {state.user?.username ?? "Student"}
             </h1>
           </div>
@@ -58,7 +58,7 @@ export default function DashboardPage() {
               <Target size={16} />
               <span className="text-xs font-medium uppercase tracking-wide">Overall mastery</span>
             </div>
-            <p className="font-mono text-4xl font-medium text-graphite numeric">0%</p>
+            <p className="font-mono text-4xl font-medium text-graphite dark:text-paper numeric">0%</p>
             <p className="text-sm text-slate mt-2 max-w-md">
               This will move the moment you start reading notes, answering
               flashcards or attempting questions -- every action recalculates
@@ -67,20 +67,20 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        <h2 className="font-display text-lg font-semibold text-graphite mb-4">Your subjects</h2>
+        <h2 className="font-display text-lg font-semibold text-graphite dark:text-paper mb-4">Your subjects</h2>
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           {state.subjects.map((s) => (
             <Link
               key={s.id}
               href="/subjects/biology"
-              className="group flex items-center justify-between rounded-md border border-graphite/[0.06] bg-paper-surface p-5 shadow-card transition-colors hover:border-graphite/15"
+              className="group flex items-center justify-between rounded-md border border-graphite/[0.06] dark:border-white/10 bg-paper-surface dark:bg-graphite-soft p-5 shadow-card dark:shadow-none transition-colors hover:border-graphite/15 dark:hover:border-white/20"
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark">
+                <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark dark:bg-cobalt/25 dark:text-white">
                   <FlaskConical size={18} />
                 </div>
                 <div>
-                  <p className="font-display text-base font-semibold text-graphite">
+                  <p className="font-display text-base font-semibold text-graphite dark:text-paper">
                     {s.subject}
                   </p>
                   <div className="flex items-center gap-2 mt-1">
@@ -98,7 +98,7 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <h2 className="font-display text-lg font-semibold text-graphite mb-4">Focus zone</h2>
+        <h2 className="font-display text-lg font-semibold text-graphite dark:text-paper mb-4">Focus zone</h2>
         <EmptyState
           icon={<Target size={20} />}
           title="Nothing to focus on yet"

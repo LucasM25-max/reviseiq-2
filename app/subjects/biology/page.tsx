@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import Link from "next/link";
 import {
@@ -10,7 +9,6 @@ import {
   PenLine,
   Calculator,
   SpellCheck,
-  CalendarClock,
   type LucideIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/ui/AppShell";
@@ -28,7 +26,6 @@ const moduleIcons: Record<string, LucideIcon> = {
   "six-mark": PenLine,
   "maths-skills": Calculator,
   "command-words": SpellCheck,
-  timetable: CalendarClock,
 };
 
 export default function BiologyHub() {
@@ -43,7 +40,7 @@ export default function BiologyHub() {
     <AppShell>
       <div className="mx-auto max-w-5xl px-6 md:px-10 py-10">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="font-display text-2xl font-semibold text-graphite">Biology</h1>
+          <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper">Biology</h1>
           <div className="flex gap-2">
             <Badge tone="neutral">{config?.board ?? "AQA"}</Badge>
             {config?.tier && <Badge tone="cobalt">{config.tier}</Badge>}
@@ -78,17 +75,19 @@ export default function BiologyHub() {
           </div>
         </section>
 
-        <h2 className="font-display text-lg font-semibold text-graphite mb-4">Study tools</h2>
+        <h2 className="font-display text-lg font-semibold text-graphite dark:text-paper mb-4">
+          Study tools
+        </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {biologyModules.map((mod) => {
             const IconComponent = moduleIcons[mod.slug];
             return (
               <Link key={mod.slug} href={`/subjects/biology/${mod.slug}`}>
-                <Card className="p-5 h-full transition-colors hover:border-graphite/15">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark mb-4">
+                <Card className="p-5 h-full transition-colors hover:border-graphite/15 dark:hover:border-white/20">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark dark:bg-cobalt/25 dark:text-white mb-4">
                     <IconComponent size={17} />
                   </div>
-                  <p className="font-display text-sm font-semibold text-graphite mb-1.5">
+                  <p className="font-display text-sm font-semibold text-graphite dark:text-paper mb-1.5">
                     {mod.name}
                   </p>
                   <p className="text-xs text-slate leading-relaxed">{mod.description}</p>

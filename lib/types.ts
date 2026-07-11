@@ -34,10 +34,28 @@ export interface UserProfile {
   createdAt: string;
 }
 
+export type Theme = "light" | "dark";
+export type TextScale = "normal" | "large" | "xl";
+
+export interface Preferences {
+  theme: Theme;
+  dyslexiaFont: boolean;
+  textScale: TextScale;
+  colorBlindSafe: boolean;
+}
+
+export const defaultPreferences: Preferences = {
+  theme: "light",
+  dyslexiaFont: false,
+  textScale: "normal",
+  colorBlindSafe: false,
+};
+
 export interface BrainState {
   user: UserProfile | null;
   subjects: SubjectConfig[];
   onboarded: boolean;
+  preferences: Preferences;
 }
 
 /** Every topic-level mastery score the "brain" will eventually track.

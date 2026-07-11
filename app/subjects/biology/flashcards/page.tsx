@@ -4,9 +4,12 @@ import { Layers } from "lucide-react";
 import { AppShell } from "@/components/ui/AppShell";
 import { ModuleHeader } from "@/components/ui/ModuleHeader";
 import { Card } from "@/components/ui/Card";
-import { biologyTopics } from "@/lib/data/biologyTopics";
+import { biologyTopics, topicColor } from "@/lib/data/biologyTopics";
+import { useBrain } from "@/lib/store";
 
 export default function FlashcardsPage() {
+  const { state } = useBrain();
+
   return (
     <AppShell>
       <div className="mx-auto max-w-4xl px-6 md:px-10 py-10">
@@ -22,15 +25,15 @@ export default function FlashcardsPage() {
               <div className="flex items-center gap-3">
                 <span
                   className="h-2 w-2 rounded-full shrink-0"
-                  style={{ backgroundColor: t.color }}
+                  style={{ backgroundColor: topicColor(t.code, state.preferences.colorBlindSafe) }}
                   aria-hidden
                 />
                 <div>
-                  <p className="text-sm font-medium text-graphite">{t.name}</p>
+                  <p className="text-sm font-medium text-graphite dark:text-paper">{t.name}</p>
                   <p className="text-xs text-slate-light">0 cards due</p>
                 </div>
               </div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-graphite/[0.04] text-slate-light">
+              <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-graphite/[0.04] dark:bg-white/5 text-slate-light">
                 <Layers size={15} />
               </div>
             </Card>
