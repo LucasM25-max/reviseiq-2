@@ -22,7 +22,11 @@ export function Stepper({ steps, current }: StepperProps) {
             <span
               className={clsx(
                 "text-sm font-medium",
-                i === current ? "text-graphite" : i < current ? "text-graphite/70" : "text-slate-light"
+                i === current
+                  ? "text-graphite dark:text-paper"
+                  : i < current
+                  ? "text-graphite/70 dark:text-paper/70"
+                  : "text-slate-light"
               )}
             >
               {step}
@@ -32,7 +36,7 @@ export function Stepper({ steps, current }: StepperProps) {
             <div
               className={clsx(
                 "h-px flex-1 mx-4 mt-[-20px]",
-                i < current ? "bg-signal" : "bg-graphite/10"
+                i < current ? "bg-signal" : "bg-graphite/10 dark:bg-white/10"
               )}
             />
           )}

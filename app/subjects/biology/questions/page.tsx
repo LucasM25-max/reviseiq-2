@@ -8,7 +8,7 @@ import { ModuleHeader } from "@/components/ui/ModuleHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { biologyTopics } from "@/lib/data/biologyTopics";
 
-const aoOptions = ["AO1 -- Recall", "AO2 -- Application", "AO3 -- Analysis"];
+const aoOptions = ["AO1 — Recall", "AO2 — Application", "AO3 — Analysis"];
 const tierOptions = ["Foundation", "Higher"];
 
 export default function QuestionsPage() {
@@ -55,7 +55,7 @@ export default function QuestionsPage() {
         <EmptyState
           icon={<ListChecks size={20} />}
           title="0 questions match these filters"
-          description="The question bank is empty for now -- this filter bar is wired up and ready for content."
+          description="The question bank is empty for now — this filter bar is wired up and ready for content."
         />
       </div>
     </AppShell>
@@ -79,7 +79,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-sm border border-graphite/15 bg-paper-surface px-3 py-2 text-sm text-graphite outline-none focus:border-cobalt"
+        className="rounded-sm border border-graphite/15 dark:border-white/15 bg-paper-surface dark:bg-graphite-soft px-3 py-2 text-sm text-graphite dark:text-paper outline-none focus:border-cobalt"
       >
         {children}
       </select>

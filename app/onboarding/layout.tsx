@@ -15,11 +15,11 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
     : 0;
 
   return (
-    <main className="min-h-screen bg-paper">
+    <main className="min-h-screen bg-paper dark:bg-graphite">
       <div className="mx-auto max-w-3xl px-6 py-12 md:py-16">
         <div className="flex items-center gap-2 mb-10">
           <span className="h-5 w-5 rounded-sm bg-cobalt" aria-hidden />
-          <span className="font-display text-sm font-semibold text-graphite">ReviseIQ setup</span>
+          <span className="font-display text-sm font-semibold text-graphite dark:text-paper">ReviseIQ setup</span>
         </div>
         <Stepper steps={steps} current={current} />
         <div className="mt-12">{children}</div>

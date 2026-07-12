@@ -59,7 +59,7 @@ export interface BrainState {
 }
 
 /** Every topic-level mastery score the "brain" will eventually track.
- *  Content and real scores are intentionally absent at this stage --
+ *  Content and real scores are intentionally absent at this stage —
  *  every value below starts at 0 and is wired up, not populated. */
 export interface TopicMastery {
   topicCode: string;

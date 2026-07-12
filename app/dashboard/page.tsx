@@ -61,7 +61,7 @@ export default function DashboardPage() {
             <p className="font-mono text-4xl font-medium text-graphite dark:text-paper numeric">0%</p>
             <p className="text-sm text-slate mt-2 max-w-md">
               This will move the moment you start reading notes, answering
-              flashcards or attempting questions -- every action recalculates
+              flashcards or attempting questions — every action recalculates
               it.
             </p>
           </Card>

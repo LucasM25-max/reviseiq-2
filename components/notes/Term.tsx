@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 
 /**
- * Inline key-term highlight with a click-to-reveal definition -- the
+ * Inline key-term highlight with a click-to-reveal definition — the
  * lightweight "linked to the glossary" behaviour promised in the note
  * formatting legend. Deliberately inline + click-to-expand rather than a
  * hover tooltip, so it works the same on touch devices.

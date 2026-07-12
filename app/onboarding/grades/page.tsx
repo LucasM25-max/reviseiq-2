@@ -48,11 +48,11 @@ export default function GradesStep() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-graphite mb-1.5">
+      <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper mb-1.5">
         Set your grades
       </h1>
       <p className="text-sm text-slate mb-8 max-w-lg">
-        Your current grade is your best honest estimate -- from a teacher,
+        Your current grade is your best honest estimate — from a teacher,
         mock exam, or your own judgement. The gap to your target grade shapes
         how the app paces your revision.
       </p>
@@ -60,7 +60,7 @@ export default function GradesStep() {
       <div className="flex flex-col gap-4 mb-10">
         {state.subjects.map((s) => (
           <Card key={s.id} className="p-5">
-            <p className="font-display text-base font-semibold text-graphite mb-4">
+            <p className="font-display text-base font-semibold text-graphite dark:text-paper mb-4">
               {s.subject} <span className="text-slate font-sans text-sm font-normal">({s.board})</span>
             </p>
             <div className="grid sm:grid-cols-2 gap-5">

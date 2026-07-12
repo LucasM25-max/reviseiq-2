@@ -51,12 +51,12 @@ export default function SubjectsStep() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-graphite mb-1.5">
+      <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper mb-1.5">
         Choose your subjects
       </h1>
       <p className="text-sm text-slate mb-8 max-w-lg">
         Pick a subject and exam board to set up. More subjects and boards are
-        being added -- everything here is built to support them without
+        being added — everything here is built to support them without
         changing how this screen works.
       </p>
 
@@ -66,18 +66,18 @@ export default function SubjectsStep() {
         onClick={() => setSelected(true)}
         className={clsx(
           "p-5 mb-4 cursor-pointer transition-colors",
-          selected ? "border-cobalt ring-1 ring-cobalt" : "hover:border-graphite/15"
+          selected ? "border-cobalt ring-1 ring-cobalt" : "hover:border-graphite/15 dark:hover:border-white/20"
         )}
       >
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-display text-base font-semibold text-graphite">Biology</p>
+            <p className="font-display text-base font-semibold text-graphite dark:text-paper">Biology</p>
             <p className="text-sm text-slate">AQA</p>
           </div>
           <div
             className={clsx(
               "flex h-6 w-6 items-center justify-center rounded-full",
-              selected ? "bg-cobalt text-white" : "border border-graphite/20"
+              selected ? "bg-cobalt text-white" : "border border-graphite/20 dark:border-white/20"
             )}
           >
             {selected && <Check size={14} />}
@@ -86,11 +86,11 @@ export default function SubjectsStep() {
 
         {selected && (
           <div
-            className="mt-6 grid sm:grid-cols-2 gap-6 border-t border-graphite/[0.06] pt-6"
+            className="mt-6 grid sm:grid-cols-2 gap-6 border-t border-graphite/[0.06] dark:border-white/10 pt-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div>
-              <p className="text-sm font-medium text-graphite mb-2.5">Entry type</p>
+              <p className="text-sm font-medium text-graphite dark:text-paper mb-2.5">Entry type</p>
               <div className="flex flex-col gap-2">
                 {(["Separate (Triple)", "Combined Science: Trilogy"] as EntryType[]).map(
                   (option) => (
@@ -106,7 +106,7 @@ export default function SubjectsStep() {
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium text-graphite mb-2.5">Tier</p>
+              <p className="text-sm font-medium text-graphite dark:text-paper mb-2.5">Tier</p>
               <div className="flex flex-col gap-2">
                 {(["Foundation", "Higher"] as Tier[]).map((option) => (
                   <OptionPill key={option} active={tier === option} onClick={() => setTier(option)}>
@@ -126,7 +126,7 @@ export default function SubjectsStep() {
         {comingSoon.map((subject) => (
           <div
             key={subject}
-            className="flex items-center justify-between rounded-sm border border-dashed border-graphite/15 px-5 py-4 text-slate-light"
+            className="flex items-center justify-between rounded-sm border border-dashed border-graphite/15 dark:border-white/15 px-5 py-4 text-slate-light"
           >
             <span className="text-sm">{subject}</span>
             <Lock size={14} />
@@ -157,8 +157,8 @@ function OptionPill({
       className={clsx(
         "rounded-sm border px-4 py-2.5 text-left text-sm font-medium transition-colors",
         active
-          ? "border-cobalt bg-cobalt-light text-cobalt-dark"
-          : "border-graphite/15 text-slate hover:border-graphite/30"
+          ? "border-cobalt bg-cobalt-light text-cobalt-dark dark:bg-cobalt/20 dark:text-white"
+          : "border-graphite/15 dark:border-white/15 text-slate hover:border-graphite/30 dark:hover:border-white/30"
       )}
     >
       {children}

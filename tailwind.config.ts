@@ -16,8 +16,8 @@ const config: Config = {
           surface: "#FFFFFF",
         },
         slate: {
-          DEFAULT: "#5B6470",
-          light: "#8A93A0",
+          DEFAULT: "rgb(var(--slate) / <alpha-value>)",
+          light: "rgb(var(--slate-light) / <alpha-value>)",
         },
         cobalt: {
           DEFAULT: "#2954A5",

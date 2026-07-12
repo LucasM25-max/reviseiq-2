@@ -131,11 +131,11 @@ components/ui/           Design-system primitives (Button, Card, Badge,
 components/notes/         Note-authoring building blocks (Term, Callout,
                           DiagramPrompt, SelfCheck, NoteSection, DataTable)
 lib/
-  store.tsx              The "brain" -- client-side state + localStorage,
+  store.tsx              The "brain" — client-side state + localStorage,
                           now including theme/accessibility preferences
   types.ts                Shared data model
   data/biologyTopics.ts   AQA Biology spec structure (topics, modules,
-                           required practicals, colour palettes) --
+                           required practicals, colour palettes) —
                            structural only, no content
   content/biology/        Actual written notes content, one file per topic
                            (topic-4-1.tsx so far)

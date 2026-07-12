@@ -30,10 +30,10 @@ const BrainContext = createContext<BrainContextValue | null>(null);
 /**
  * NOTE ON AUTH: this is a local-only, single-device mock so the onboarding
  * and product flow can be tested end to end without a backend. Passwords
- * are validated on forms but deliberately never persisted anywhere -- there
+ * are validated on forms but deliberately never persisted anywhere — there
  * is nothing here safe to call "real" auth. Before any real user data is
  * involved, replace this with a proper backend (hashed credentials, a
- * database, session handling -- e.g. NextAuth, Supabase Auth, or a custom
+ * database, session handling — e.g. NextAuth, Supabase Auth, or a custom
  * API).
  */
 export function BrainProvider({ children }: { children: React.ReactNode }) {
@@ -61,7 +61,7 @@ export function BrainProvider({ children }: { children: React.ReactNode }) {
   }, [state, hydrated]);
 
   // Apply theme, dyslexia-friendly font and text scale to the document as
-  // preferences change -- these are global visual effects, not scoped to
+  // preferences change — these are global visual effects, not scoped to
   // any one component tree.
   useEffect(() => {
     if (!hydrated) return;

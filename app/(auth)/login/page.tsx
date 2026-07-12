@@ -32,14 +32,14 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-paper flex items-center justify-center px-6 py-12">
+    <main className="min-h-screen bg-paper dark:bg-graphite flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <Link href="/" className="flex items-center gap-2 mb-10 justify-center">
           <span className="h-6 w-6 rounded-sm bg-cobalt" aria-hidden />
-          <span className="font-display text-base font-semibold text-graphite">ReviseIQ</span>
+          <span className="font-display text-base font-semibold text-graphite dark:text-paper">ReviseIQ</span>
         </Link>
 
-        <h1 className="font-display text-2xl font-semibold text-graphite text-center mb-1">
+        <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper text-center mb-1">
           Welcome back
         </h1>
         <p className="text-sm text-slate text-center mb-8">Log in to continue revising.</p>
@@ -67,7 +67,7 @@ export default function LoginPage() {
           </FormField>
 
           {error && (
-            <p className="text-sm text-danger bg-danger-light rounded-sm px-3 py-2">{error}</p>
+            <p className="text-sm text-danger bg-danger-light dark:bg-danger/15 rounded-sm px-3 py-2">{error}</p>
           )}
 
           <Button type="submit" className="w-full mt-2">

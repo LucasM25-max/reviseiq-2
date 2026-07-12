@@ -153,7 +153,7 @@ function PasswordSection() {
       />
       <p className="text-xs text-amber bg-amber-light dark:bg-amber/15 rounded-sm px-3 py-2 mb-5">
         This app doesn't have a backend yet, so passwords aren't stored
-        anywhere -- this form is wired up and validates correctly, but
+        anywhere — this form is wired up and validates correctly, but
         nothing is actually saved until real authentication is added.
       </p>
       <div className="flex flex-col gap-5 mb-5 max-w-sm">
@@ -183,7 +183,7 @@ function PasswordSection() {
         </FormField>
       </div>
       {error && (
-        <p className="text-sm text-danger bg-danger-light rounded-sm px-3 py-2 mb-4 max-w-sm">{error}</p>
+        <p className="text-sm text-danger bg-danger-light dark:bg-danger/15 rounded-sm px-3 py-2 mb-4 max-w-sm">{error}</p>
       )}
       <div className="flex items-center gap-3">
         <Button variant="secondary" onClick={handleSave}>

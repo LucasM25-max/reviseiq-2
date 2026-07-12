@@ -77,7 +77,7 @@ export default function TimetablePage() {
                 ? "Add a subject from onboarding to start building a schedule."
                 : allDatesSet
                 ? "Every subject has exam dates set. Once there's mastery data to work from, a day-by-day schedule spanning all subjects will build itself here."
-                : "Head to your account or subject setup to fill in any missing Paper 1 or Paper 2 dates -- the timetable engine needs them to work backward from."
+                : "Head to your account or subject setup to fill in any missing Paper 1 or Paper 2 dates — the timetable engine needs them to work backward from."
             }
           />
         </div>

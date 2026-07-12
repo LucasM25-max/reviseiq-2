@@ -4,10 +4,17 @@
 
 :root {
   color-scheme: light;
+  /* text-slate / text-slate-light: secondary and tertiary text.
+     Values chosen to meet WCAG AA contrast against both the light
+     paper background and the dark graphite background. */
+  --slate: 91 100 112; /* #5B6470 on light paper */
+  --slate-light: 122 130 142; /* #7A828E on light paper */
 }
 
 html.dark {
   color-scheme: dark;
+  --slate: 168 176 187; /* #A8B0BB on dark graphite */
+  --slate-light: 140 148 160; /* #8C94A0 on dark graphite */
 }
 
 * {
@@ -44,7 +51,7 @@ html.text-scale-xl {
   font-size: 125%;
 }
 
-/* Visible keyboard focus everywhere -- never suppressed */
+/* Visible keyboard focus everywhere — never suppressed */
 :focus-visible {
   outline: 2px solid #2954A5;
   outline-offset: 2px;
@@ -70,6 +77,16 @@ html.text-scale-xl {
     transparent 8px
   );
   height: 6px;
+}
+
+html.dark .tick-rule {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(243, 244, 246, 0.18) 0,
+    rgba(243, 244, 246, 0.18) 1px,
+    transparent 1px,
+    transparent 8px
+  );
 }
 
 .dial-track {

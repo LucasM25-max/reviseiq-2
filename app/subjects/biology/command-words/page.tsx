@@ -31,7 +31,7 @@ export default function CommandWordsPage() {
         <div className="flex flex-col gap-2 mt-8">
           {commandWords.map((word) => (
             <Card key={word} className="p-4 flex items-center justify-between">
-              <span className="text-sm font-medium text-graphite">{word}</span>
+              <span className="text-sm font-medium text-graphite dark:text-paper">{word}</span>
               <Badge tone="amber">Definition coming soon</Badge>
             </Card>
           ))}

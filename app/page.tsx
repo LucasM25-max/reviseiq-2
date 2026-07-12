@@ -6,12 +6,12 @@ import { Card } from "@/components/ui/Card";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-paper">
+    <main className="min-h-screen bg-paper dark:bg-graphite">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <header className="flex items-center justify-between py-8">
           <div className="flex items-center gap-2">
             <span className="h-6 w-6 rounded-sm bg-cobalt" aria-hidden />
-            <span className="font-display text-base font-semibold text-graphite">
+            <span className="font-display text-base font-semibold text-graphite dark:text-paper">
               ReviseIQ
             </span>
           </div>
@@ -28,7 +28,7 @@ export default function LandingPage() {
         <section className="grid md:grid-cols-2 gap-12 items-center py-16 md:py-24">
           <div>
             <span className="tick-rule w-16 block mb-6" />
-            <h1 className="font-display text-4xl md:text-5xl font-semibold text-graphite leading-[1.08] tracking-tight">
+            <h1 className="font-display text-4xl md:text-5xl font-semibold text-graphite dark:text-paper leading-[1.08] tracking-tight">
               GCSE revision, measured precisely.
             </h1>
             <p className="mt-6 text-base md:text-lg text-slate leading-relaxed max-w-md">
@@ -64,7 +64,7 @@ export default function LandingPage() {
               />
               <p className="text-xs text-slate-light text-center max-w-[220px]">
                 Every note read, flashcard answered and question attempted
-                moves this number -- for real students, this starts at zero.
+                moves this number — for real students, this starts at zero.
               </p>
             </Card>
           </div>
@@ -74,7 +74,7 @@ export default function LandingPage() {
           <FeatureCard
             icon={<Microscope size={18} />}
             title="Mapped to the spec"
-            description="Every topic, paper and required practical follows the AQA Biology specification exactly -- nothing invented, nothing missed."
+            description="Every topic, paper and required practical follows the AQA Biology specification exactly — nothing invented, nothing missed."
           />
           <FeatureCard
             icon={<Repeat size={18} />}
@@ -103,10 +103,10 @@ function FeatureCard({
 }) {
   return (
     <Card className="p-6">
-      <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark mb-4">
+      <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-cobalt-light text-cobalt-dark dark:bg-cobalt/20 dark:text-white mb-4">
         {icon}
       </div>
-      <h3 className="font-display text-sm font-semibold text-graphite mb-1.5">{title}</h3>
+      <h3 className="font-display text-sm font-semibold text-graphite dark:text-paper mb-1.5">{title}</h3>
       <p className="text-sm text-slate leading-relaxed">{description}</p>
     </Card>
   );

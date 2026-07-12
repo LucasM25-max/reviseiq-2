@@ -30,7 +30,7 @@ export default function TopicNotesPage() {
 
   return (
     <AppShell>
-      <div className={`mx-auto px-6 md:px-10 py-10 ${hasContent ? "max-w-4xl" : "max-w-3xl"}`}>
+      <div className={`mx-auto px-6 md:px-10 py-10 ${hasContent ? "max-w-6xl" : "max-w-3xl"}`}>
         <ModuleHeader
           eyebrow={`Topic ${topic?.code ?? ""}`}
           title={topic?.name ?? "Topic not found"}
@@ -54,41 +54,45 @@ export default function TopicNotesPage() {
 
         {hasContent ? (
           <>
-            <Card className="p-5 mt-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Info size={14} className="text-slate" />
-                <p className="text-xs font-medium uppercase tracking-wide text-slate">
-                  On this page
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {sections!.map((s) => (
-                  <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    className="rounded-xs bg-graphite/[0.05] dark:bg-white/10 px-2.5 py-1 text-xs font-medium text-slate hover:text-graphite dark:hover:text-paper transition-colors"
-                  >
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-              <p className="text-xs text-slate-light leading-relaxed">
-                Tap any <span className="text-signal font-semibold underline decoration-dotted">underlined term</span>{" "}
-                for its definition, and tap a question at the end of each section to check
-                your answer.
-              </p>
-            </Card>
+            <div className="mt-8 lg:flex lg:items-start lg:gap-8">
+              <div className="min-w-0 flex-1">
+                {topic?.code === "4.1" && <Topic41CellStructureNotes />}
 
-            <div className="mt-8">
-              {topic?.code === "4.1" && <Topic41CellStructureNotes />}
-            </div>
+                <div className="mt-8">
+                  <EmptyState
+                    icon={<BookOpen size={20} />}
+                    title="More sections coming"
+                    description="This page currently covers 4.1.1 Cell structure. Further sections of Cell biology will be added here as they're written."
+                  />
+                </div>
+              </div>
 
-            <div className="mt-8">
-              <EmptyState
-                icon={<BookOpen size={20} />}
-                title="More sections coming"
-                description="This page currently covers 4.1.1 Cell structure. Further sections of Cell biology will be added here as they're written."
-              />
+              <aside className="mt-8 lg:mt-0 lg:sticky lg:top-8 lg:w-64 lg:shrink-0">
+                <Card className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Info size={14} className="text-slate" />
+                    <p className="text-xs font-medium uppercase tracking-wide text-slate">
+                      On this page
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1 mb-4">
+                    {sections!.map((s) => (
+                      <a
+                        key={s.id}
+                        href={`#${s.id}`}
+                        className="rounded-xs px-2.5 py-1.5 text-xs font-medium text-slate hover:bg-graphite/[0.05] hover:text-graphite dark:hover:bg-white/10 dark:hover:text-paper transition-colors"
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-light leading-relaxed">
+                    Tap any <span className="text-signal font-semibold underline decoration-dotted">underlined term</span>{" "}
+                    for its definition, and tap a question at the end of each section to check
+                    your answer.
+                  </p>
+                </Card>
+              </aside>
             </div>
           </>
         ) : (

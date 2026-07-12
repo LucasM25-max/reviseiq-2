@@ -2,14 +2,14 @@ export interface BiologyTopic {
   code: string;
   name: string;
   paper: 1 | 2;
-  color: string; // hex, default palette -- see topicColorsSafe for the alt palette
+  color: string; // hex, default palette — see topicColorsSafe for the alt palette
 }
 
-// AQA GCSE Biology (8461 / 8464 shared content) -- the seven specification
+// AQA GCSE Biology (8461 / 8464 shared content) — the seven specification
 // topics, numbered as AQA numbers them. This numbering is real spec order,
 // so it is used as the app's structural device rather than an arbitrary 1-7.
 // Colours are applied inline (not as Tailwind classes) since they're looped
-// over dynamically -- values are kept in sync with tailwind.config.ts.
+// over dynamically — values are kept in sync with tailwind.config.ts.
 export const biologyTopics: BiologyTopic[] = [
   { code: "4.1", name: "Cell biology", paper: 1, color: "#7C5CBF" },
   { code: "4.2", name: "Organisation", paper: 1, color: "#C14E77" },
@@ -73,7 +73,7 @@ export const biologyModules: FeatureModule[] = [
   {
     slug: "maths-skills",
     name: "Maths skills",
-    description: "The maths AQA examines inside Biology -- standard form, ratios, graphs, means.",
+    description: "The maths AQA examines inside Biology — standard form, ratios, graphs, means.",
   },
   {
     slug: "command-words",
@@ -102,5 +102,5 @@ export const requiredPracticals: RequiredPractical[] = [
   { id: 7, title: "Effect of exercise on heart rate and breathing rate", topicCode: "4.5", status: "confirmed" },
   { id: 8, title: "Investigating human reaction time", topicCode: "4.5", status: "confirmed" },
   { id: 9, title: "Sampling techniques: quadrats and transects", topicCode: "4.7", status: "confirmed" },
-  { id: 10, title: "Practical 10 -- title to be confirmed against current AQA specification", topicCode: "4.7", status: "tbc" },
+  { id: 10, title: "Practical 10 — title to be confirmed against current AQA specification", topicCode: "4.7", status: "tbc" },
 ];

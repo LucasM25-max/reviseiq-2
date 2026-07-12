@@ -22,13 +22,13 @@ export default function MathsSkillsPage() {
         <ModuleHeader
           eyebrow="Maths skills"
           title="The maths inside Biology"
-          description="Around 10% of Biology marks depend on maths skills applied in a biological context -- drilled separately so marks aren't lost here."
+          description="Around 10% of Biology marks depend on maths skills applied in a biological context — drilled separately so marks aren't lost here."
         />
 
         <div className="grid sm:grid-cols-2 gap-3 mt-8 mb-6">
           {skillAreas.map((skill) => (
             <Card key={skill} className="p-4">
-              <p className="text-sm font-medium text-graphite">{skill}</p>
+              <p className="text-sm font-medium text-graphite dark:text-paper">{skill}</p>
               <p className="text-xs text-slate-light mt-1">Drills coming soon</p>
             </Card>
           ))}
@@ -37,7 +37,7 @@ export default function MathsSkillsPage() {
         <EmptyState
           icon={<Calculator size={20} />}
           title="No drills yet"
-          description="This module is scaffolded and ready -- practice questions for each skill area will be added here."
+          description="This module is scaffolded and ready — practice questions for each skill area will be added here."
         />
       </div>
     </AppShell>

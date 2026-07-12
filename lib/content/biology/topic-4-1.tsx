@@ -1,13 +1,14 @@
 import React from "react";
 import { Term } from "@/components/notes/Term";
 import { DiagramPrompt } from "@/components/notes/DiagramPrompt";
+import { DiagramImage } from "@/components/notes/DiagramImage";
 import { Callout } from "@/components/notes/Callout";
 import { SelfCheck } from "@/components/notes/SelfCheck";
 import { NoteSection } from "@/components/notes/NoteSection";
 import { DataTable } from "@/components/notes/DataTable";
 
 /**
- * AQA GCSE Biology -- 4.1.1 Cell structure.
+ * AQA GCSE Biology — 4.1.1 Cell structure.
  *
  * Source: AQA specification 4.1.1.1-4.1.1.5 (structure and sub-point order
  * followed exactly) and the equivalent CGP revision guide pages, matched
@@ -20,7 +21,7 @@ import { DataTable } from "@/components/notes/DataTable";
  * 4.1.1.5 is marked "HT only", so this whole sub-topic applies to both
  * Foundation and Higher tier.
  *
- * The required practical (microscopy) is deliberately not covered here --
+ * The required practical (microscopy) is deliberately not covered here —
  * see the separate Required Practicals module.
  */
 
@@ -29,13 +30,6 @@ const color = "#7C5CBF"; // topic 4.1 accent, matches lib/data/biologyTopics.ts
 export function Topic41CellStructureNotes() {
   return (
     <div className="flex flex-col gap-12">
-      <Callout variant="example" title="Foundation and Higher">
-        <p>
-          Everything in 4.1.1 Cell structure is examined on both tiers --
-          there's no Higher-Tier-only content in this sub-topic.
-        </p>
-      </Callout>
-
       {/* 4.1.1.1 */}
       <NoteSection id="4.1.1.1" number="4.1.1.1" title="Eukaryotes and prokaryotes" color={color}>
         <div className="text-sm text-slate leading-relaxed">
@@ -45,7 +39,7 @@ export function Topic41CellStructureNotes() {
             eukaryotic
           </Term>{" "}
           and{" "}
-          <Term definition="A cell that does not have its genetic material enclosed in a nucleus -- e.g. a bacterium.">
+          <Term definition="A cell that does not have its genetic material enclosed in a nucleus — e.g. a bacterium.">
             prokaryotic
           </Term>
           .
@@ -59,7 +53,7 @@ export function Topic41CellStructureNotes() {
           </li>
           <li>
             <strong className="text-graphite dark:text-paper">Prokaryotic cells</strong> are
-            much smaller and simpler than eukaryotic cells -- bacteria are prokaryotes. A
+            much smaller and simpler than eukaryotic cells — bacteria are prokaryotes. A
             prokaryotic cell has cytoplasm and a cell membrane surrounded by a cell wall, but
             its genetic material isn't enclosed in a nucleus. Instead, it's a single loop of
             DNA that floats freely in the cytoplasm. Prokaryotic cells may also contain one or
@@ -74,7 +68,7 @@ export function Topic41CellStructureNotes() {
         <DataTable
           headers={["", "Eukaryotic cell", "Prokaryotic cell"]}
           rows={[
-            ["Typical size", "Larger -- roughly 10-100 μm", "Much smaller -- roughly 0.1-5 μm"],
+            ["Typical size", "Larger — roughly 10-100 μm", "Much smaller — roughly 0.1-5 μm"],
             [
               "Genetic material",
               "Enclosed in a nucleus",
@@ -84,7 +78,7 @@ export function Topic41CellStructureNotes() {
           ]}
         />
 
-        <Callout variant="maths" title="Maths skill -- scale and size (MS 1b, 2a, 2h / WS 4.4)">
+        <Callout variant="maths" title="Maths skill — scale and size (MS 1b, 2a, 2h / WS 4.4)">
           <p>
             Cells are measured on a tiny scale, so their sizes are usually given in
             millimetres (mm), micrometres (μm) or nanometres (nm) rather than metres. You
@@ -112,16 +106,17 @@ export function Topic41CellStructureNotes() {
           </p>
         </Callout>
 
-        <DiagramPrompt
+        <DiagramImage
           title="Diagram: prokaryotic cell (bacterium)"
-          prompt="A clean, flat vector-style scientific diagram of a generalised prokaryotic cell (bacterium), cross-section view. Labelled parts: cell wall, cell membrane, cytoplasm, a single circular loop of DNA in the centre, and one small circular plasmid. Simple textbook-style labelling with thin leader lines, muted educational colour palette, no shading, no photorealistic texture, no background."
+          src="/images/biology/prokaryotic-cell-diagram.png"
+          alt="Labelled diagram of a generalised prokaryotic (bacterial) cell in cross-section, showing the cell wall, cell membrane, cytoplasm, a single circular loop of DNA (nucleoid), and a plasmid."
         />
 
         <SelfCheck
           questions={[
             {
               q: "Explain one way in which a prokaryotic cell differs from a eukaryotic cell.",
-              a: "Its genetic material is not enclosed in a nucleus -- it's a single DNA loop free in the cytoplasm. (Prokaryotic cells are also much smaller.)",
+              a: "Its genetic material is not enclosed in a nucleus — it's a single DNA loop free in the cytoplasm. (Prokaryotic cells are also much smaller.)",
             },
             {
               q: "A red blood cell has a diameter of about 0.007 mm. Write this in standard form.",
@@ -139,7 +134,7 @@ export function Topic41CellStructureNotes() {
       <NoteSection id="4.1.1.2" number="4.1.1.2" title="Animal and plant cells" color={color}>
         <div className="text-sm text-slate leading-relaxed">
           The parts of a cell are called{" "}
-          <Term definition="The named, functional parts inside a cell -- e.g. the nucleus, mitochondria or ribosomes.">
+          <Term definition="The named, functional parts inside a cell — e.g. the nucleus, mitochondria or ribosomes.">
             subcellular structures
           </Term>
           . Each one has a specific function that supports how the cell works.
@@ -197,10 +192,10 @@ export function Topic41CellStructureNotes() {
               "The site of photosynthesis, which makes food for the plant. Contains the green pigment chlorophyll, which absorbs the light needed for photosynthesis.",
             ],
             [
-              <Term key="v" definition="Contains cell sap -- a weak solution of sugars and salts.">
+              <Term key="v" definition="Contains cell sap — a weak solution of sugars and salts.">
                 Permanent vacuole
               </Term>,
-              "Contains cell sap -- a weak solution of sugars and salts.",
+              "Contains cell sap — a weak solution of sugars and salts.",
             ],
             [
               <Term key="cw" definition="A rigid layer made of cellulose that strengthens and supports the cell.">
@@ -215,13 +210,13 @@ export function Topic41CellStructureNotes() {
           <p>
             A common slip is listing only the "extra" plant structures (chloroplasts,
             vacuole, cell wall) and forgetting that plant cells also have a nucleus,
-            cytoplasm, cell membrane, mitochondria and ribosomes -- exactly like animal cells.
+            cytoplasm, cell membrane, mitochondria and ribosomes — exactly like animal cells.
           </p>
         </Callout>
 
         <div className="text-sm text-slate leading-relaxed">
           <span className="font-medium text-graphite dark:text-paper">WS 1.2: </span>
-          You should be able to recognise, draw and interpret images of cells -- including
+          You should be able to recognise, draw and interpret images of cells — including
           comparing your own drawings against photographs, videos or micrographs, and using
           estimation to judge the relative size of subcellular structures.
         </div>
@@ -247,7 +242,7 @@ export function Topic41CellStructureNotes() {
             },
             {
               q: "What is contained inside a plant cell's permanent vacuole?",
-              a: "Cell sap -- a weak solution of sugars and salts.",
+              a: "Cell sap — a weak solution of sugars and salts.",
             },
           ]}
         />
@@ -331,7 +326,7 @@ export function Topic41CellStructureNotes() {
             Differentiation
           </Term>{" "}
           is the process by which a cell changes to become specialised for its function. As a
-          cell differentiates, it develops the subcellular structures it needs to do its job --
+          cell differentiates, it develops the subcellular structures it needs to do its job —
           this is what makes it a specialised cell.
         </div>
 
@@ -350,7 +345,7 @@ export function Topic41CellStructureNotes() {
 
         <Callout variant="mistake">
           <p>
-            Don't confuse differentiation with division -- differentiation is about a cell
+            Don't confuse differentiation with division — differentiation is about a cell
             changing to become specialised, not about a cell splitting into two.
           </p>
         </Callout>
@@ -398,7 +393,7 @@ export function Topic41CellStructureNotes() {
           </li>
           <li>
             Because of this, electron microscopes let us see much smaller structures in far
-            greater detail than light microscopes can -- including the internal structure of
+            greater detail than light microscopes can — including the internal structure of
             mitochondria and chloroplasts, and even tiny structures like ribosomes and
             plasmids. This has greatly increased scientists' understanding of subcellular
             structures.
@@ -418,7 +413,7 @@ export function Topic41CellStructureNotes() {
           </p>
         </Callout>
 
-        <Callout variant="example" title="Worked example 1 -- finding magnification">
+        <Callout variant="example" title="Worked example 1 — finding magnification">
           <p>
             A cell has a real width of 20 μm. Viewed under a microscope, its image measures 6
             mm across. Calculate the magnification used.
@@ -427,7 +422,7 @@ export function Topic41CellStructureNotes() {
           <p>2. magnification = image size ÷ real size = 6000 ÷ 20 = <strong>×300</strong></p>
         </Callout>
 
-        <Callout variant="example" title="Worked example 2 -- finding real size">
+        <Callout variant="example" title="Worked example 2 — finding real size">
           <p>
             A specimen is viewed at a magnification of ×250. Its image measures 15 mm wide.
             Calculate the real width of the specimen in μm.
@@ -439,8 +434,8 @@ export function Topic41CellStructureNotes() {
 
         <div className="text-sm text-slate leading-relaxed">
           Because cell measurements are often extremely small, answers are sometimes best
-          given in <Term definition="A way of writing numbers as a value between 1 and 10 multiplied by a power of 10 -- useful for very large or very small numbers.">standard form</Term>{" "}
-          -- a number between 1 and 10 multiplied by a power of 10. E.g. 0.00025 mm = 2.5 ×
+          given in <Term definition="A way of writing numbers as a value between 1 and 10 multiplied by a power of 10 — useful for very large or very small numbers.">standard form</Term>{" "}
+          — a number between 1 and 10 multiplied by a power of 10. E.g. 0.00025 mm = 2.5 ×
           10⁻⁴ mm.
         </div>
 
@@ -459,7 +454,7 @@ export function Topic41CellStructureNotes() {
 
         <SelfCheck
           questions={[
-            { q: "What is meant by the resolution of a microscope?", a: "How well it can distinguish between two points that are very close together -- higher resolution gives a sharper image." },
+            { q: "What is meant by the resolution of a microscope?", a: "How well it can distinguish between two points that are very close together — higher resolution gives a sharper image." },
             {
               q: "Give two advantages of electron microscopes over light microscopes.",
               a: "Higher magnification and higher resolution, so much smaller structures can be seen in more detail.",

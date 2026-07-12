@@ -14,7 +14,7 @@ export default function PracticalsPage() {
         <ModuleHeader
           eyebrow="Required practicals"
           title="Required practicals"
-          description="Method, variables, hazards and exam-style questions for each one -- these are heavily examined and easy to under-revise."
+          description="Method, variables, hazards and exam-style questions for each one — these are heavily examined and easy to under-revise."
         />
 
         <div className="flex flex-col gap-2 mt-8">
@@ -26,7 +26,7 @@ export default function PracticalsPage() {
                   <TestTube size={15} />
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-graphite">{p.title}</p>
+                  <p className="text-sm font-medium text-graphite dark:text-paper">{p.title}</p>
                   <p className="text-xs text-slate-light mt-0.5">
                     Linked to {topic?.code} {topic?.name}
                   </p>
@@ -41,7 +41,7 @@ export default function PracticalsPage() {
 
         <p className="text-xs text-slate-light mt-6">
           Titles are drawn from the AQA Biology specification. Method,
-          hazard and question content is intentionally not written yet --
+          hazard and question content is intentionally not written yet —
           confirm the full official list before publishing.
         </p>
       </div>

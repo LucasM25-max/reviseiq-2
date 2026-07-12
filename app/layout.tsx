@@ -22,7 +22,7 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-// Accessibility alternative font -- designed for reading clarity, toggled
+// Accessibility alternative font — designed for reading clarity, toggled
 // on from Account > Accessibility. See globals.css `.dyslexia-font`.
 const dyslexic = Atkinson_Hyperlegible({
   subsets: ["latin"],

@@ -46,7 +46,7 @@ export default function ExamDatesStep() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-graphite mb-1.5">
+      <h1 className="font-display text-2xl font-semibold text-graphite dark:text-paper mb-1.5">
         Set your exam dates
       </h1>
       <p className="text-sm text-slate mb-8 max-w-lg">
@@ -58,7 +58,7 @@ export default function ExamDatesStep() {
       <div className="flex flex-col gap-4 mb-10">
         {state.subjects.map((s) => (
           <Card key={s.id} className="p-5">
-            <p className="font-display text-base font-semibold text-graphite mb-4">
+            <p className="font-display text-base font-semibold text-graphite dark:text-paper mb-4">
               {s.subject} <span className="text-slate font-sans text-sm font-normal">({s.board})</span>
             </p>
             <div className="grid sm:grid-cols-2 gap-5">
