@@ -3,9 +3,9 @@
 A GCSE revision app, starting with AQA Biology. This build covers account
 creation, onboarding, account settings (profile, password form, dark theme,
 accessibility), a universal timetable, and the full Biology navigation
-structure with the design system in place. Revision content (notes,
-flashcards, questions, practicals detail) is intentionally left blank — see
-"What's not built yet" below.
+structure with the design system in place. Written study notes now exist for
+AQA spec point 4.1.1 Cell structure; everything else is still empty scaffold
+— see "What's not built yet" below.
 
 ## Stack
 
@@ -50,8 +50,14 @@ Visit `http://localhost:3000`.
   has set up — no longer scoped to Biology alone
 - **Biology hub** (`/subjects/biology`): all 7 AQA topics across both
   papers, linking into 7 study modules (notes, flashcards, question bank,
-  required practicals, six-mark builder, maths skills, command words) — all
-  present with working navigation and empty states, no content yet
+  required practicals, six-mark builder, maths skills, command words)
+- **Study notes for 4.1.1 Cell structure** are now written (`/subjects/biology/notes/4.1`),
+  covering 4.1.1.1–4.1.1.5 exactly as ordered in the AQA specification:
+  click-to-reveal key term definitions, comparison tables, maths-skill and
+  common-exam-mistake callouts, worked magnification examples, an on-page
+  contents jump list, diagram prompts (see below), and a self-check
+  retrieval quiz at the end of every sub-point. Every other topic and module
+  is still the empty-state scaffold.
 - **Account** (`/account`), linked from the bottom of the left nav:
   - Profile — edit username and school
   - Password — validates and is fully wired up, but see the auth note below
@@ -68,7 +74,13 @@ Visit `http://localhost:3000`.
 
 ## What's not built yet (by design, per this round's brief)
 
-- Any actual Biology notes, flashcards, questions, or practical write-ups
+- Biology notes beyond 4.1.1 Cell structure, and all flashcards, questions,
+  and practical write-ups
+- Actual diagram images. Every diagram in the 4.1.1 notes is a `DiagramPrompt`
+  component showing the exact prompt to generate it — all specify a flat
+  vector illustration style (no photorealistic textures), matching the
+  style agreed for the app. Generate the images and swap in an `<img>` or
+  `next/image` once ready.
 - Real authentication — `lib/store.tsx` explains this in detail. Usernames
   and schools persist in `localStorage`; passwords are validated on forms
   (sign-up and the new Account > Password form) but never stored anywhere.
@@ -78,6 +90,15 @@ Visit `http://localhost:3000`.
 - The mastery-scoring and spaced-repetition engine described in the product
   spec — the data model (`TopicMastery` in `lib/types.ts`) is in place, but
   nothing writes to it yet, since there's no content to generate scores from
+
+## Content note
+
+4.1.1 Cell structure content follows AQA specification wording closely for
+definitions and the magnification formula (as intended — the spec is meant
+to be reused this way). Everything else has been rephrased from the
+reference textbook pages rather than copied, since that text is copyrighted.
+Confirmed against the supplied specification excerpt that no part of 4.1.1
+is Higher-Tier-only, so it's shown once for both tiers.
 
 ## One accuracy check before this ships
 
@@ -107,6 +128,8 @@ app/                    Routes (App Router)
   subjects/biology/        Hub + 7 module pages
 components/ui/           Design-system primitives (Button, Card, Badge,
                           ProgressDial, Stepper, EmptyState, AppShell, ...)
+components/notes/         Note-authoring building blocks (Term, Callout,
+                          DiagramPrompt, SelfCheck, NoteSection, DataTable)
 lib/
   store.tsx              The "brain" -- client-side state + localStorage,
                           now including theme/accessibility preferences
@@ -114,4 +137,6 @@ lib/
   data/biologyTopics.ts   AQA Biology spec structure (topics, modules,
                            required practicals, colour palettes) --
                            structural only, no content
+  content/biology/        Actual written notes content, one file per topic
+                           (topic-4-1.tsx so far)
 ```
