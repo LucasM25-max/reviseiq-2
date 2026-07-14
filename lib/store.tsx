@@ -1,8 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { BrainState, Preferences, SubjectConfig, UserProfile } from "./types";
+import type { BrainState, CardProgress, Preferences, ReviewGrade, SubjectConfig, UserProfile } from "./types";
 import { defaultPreferences } from "./types";
+import { newCardProgress, reviewCard } from "./spacedRepetition";
 
 const STORAGE_KEY = "reviseiq.brain.v1";
 
@@ -11,6 +12,7 @@ const emptyState: BrainState = {
   subjects: [],
   onboarded: false,
   preferences: defaultPreferences,
+  flashcardProgress: {},
 };
 
 interface BrainContextValue {
@@ -23,6 +25,7 @@ interface BrainContextValue {
   completeOnboarding: () => void;
   updateProfile: (username: string, school: string | null) => void;
   updatePreferences: (partial: Partial<Preferences>) => void;
+  reviewFlashcard: (cardId: string, grade: ReviewGrade) => void;
 }
 
 const BrainContext = createContext<BrainContextValue | null>(null);
@@ -46,7 +49,12 @@ export function BrainProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         const parsed = JSON.parse(raw);
         // merge defaults so older saved state without `preferences` still works
-        setState({ ...emptyState, ...parsed, preferences: { ...defaultPreferences, ...parsed.preferences } });
+        setState({
+          ...emptyState,
+          ...parsed,
+          preferences: { ...defaultPreferences, ...parsed.preferences },
+          flashcardProgress: { ...parsed.flashcardProgress },
+        });
       }
     } catch {
       // ignore corrupt local storage
@@ -91,7 +99,8 @@ export function BrainProvider({ children }: { children: React.ReactNode }) {
         }
         return false;
       },
-      logOut: () => setState((s) => ({ ...emptyState, preferences: s.preferences })),
+      logOut: () =>
+        setState((s) => ({ ...emptyState, preferences: s.preferences, flashcardProgress: s.flashcardProgress })),
       upsertSubject: (subject) => {
         setState((s) => {
           const exists = s.subjects.some((sub) => sub.id === subject.id);
@@ -107,6 +116,16 @@ export function BrainProvider({ children }: { children: React.ReactNode }) {
       },
       updatePreferences: (partial) => {
         setState((s) => ({ ...s, preferences: { ...s.preferences, ...partial } }));
+      },
+      reviewFlashcard: (cardId, grade) => {
+        setState((s) => {
+          const existing: CardProgress = s.flashcardProgress[cardId] ?? newCardProgress(cardId);
+          const updated = reviewCard(existing, grade);
+          return {
+            ...s,
+            flashcardProgress: { ...s.flashcardProgress, [cardId]: updated },
+          };
+        });
       },
     }),
     [state, hydrated]
