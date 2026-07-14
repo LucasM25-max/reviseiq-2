@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { RotateCcw, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
@@ -11,6 +11,7 @@ import { isDue, previewInterval } from "@/lib/spacedRepetition";
 import type { CardType, Flashcard, ReviewGrade } from "@/lib/types";
 
 const NEW_CARDS_PER_SESSION = 20;
+const GRADES: ReviewGrade[] = ["again", "hard", "good", "easy"];
 
 const typeLabel: Record<CardType, string> = {
   definition: "Definition",
@@ -21,7 +22,8 @@ const typeLabel: Record<CardType, string> = {
 };
 
 const gradeStyles: Record<ReviewGrade, string> = {
-  again: "bg-danger-light text-danger hover:bg-danger/20 dark:bg-danger/15 dark:text-danger",
+  again:
+    "bg-danger-light text-danger hover:bg-danger/20 dark:bg-danger/15 dark:text-danger",
   hard: "bg-amber-light text-amber hover:bg-amber/20 dark:bg-amber/15 dark:text-amber",
   good: "bg-cobalt-light text-cobalt-dark hover:bg-cobalt/20 dark:bg-cobalt/20 dark:text-white",
   easy: "bg-signal-light text-signal hover:bg-signal/20 dark:bg-signal/15 dark:text-signal",
@@ -34,15 +36,30 @@ const gradeLabel: Record<ReviewGrade, string> = {
   easy: "Easy",
 };
 
-// Deterministic shuffle seeded by a string so the queue order is stable
-// across re-renders within a session, but varies session to session.
-function shuffle<T>(arr: T[]): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
+function shuffle<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
+}
+
+function buildQueue(
+  cards: Flashcard[],
+  progress: Record<string, unknown>,
+): Flashcard[] {
+  const due: Flashcard[] = [];
+  const fresh: Flashcard[] = [];
+  for (const card of cards) {
+    const cardProgress = progress[card.id] as Parameters<typeof isDue>[0];
+    if (!cardProgress) fresh.push(card);
+    else if (isDue(cardProgress)) due.push(card);
+  }
+  return shuffle([
+    ...shuffle(due),
+    ...shuffle(fresh).slice(0, NEW_CARDS_PER_SESSION),
+  ]);
 }
 
 export function FlashcardReview({
@@ -53,27 +70,27 @@ export function FlashcardReview({
   topicColorHex: string;
 }) {
   const { state, hydrated, reviewFlashcard } = useBrain();
+  const [sessionId, setSessionId] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [queueIndex, setQueueIndex] = useState(0);
-  const [tally, setTally] = useState<Record<ReviewGrade, number>>({ again: 0, hard: 0, good: 0, easy: 0 });
+  const [tally, setTally] = useState<Record<ReviewGrade, number>>({
+    again: 0,
+    hard: 0,
+    good: 0,
+    easy: 0,
+  });
 
-  // Built once per mount: due cards (studied before, now due again) plus a
-  // capped batch of brand-new cards, interleaved by shuffling together.
-  // Capping new cards per session is standard SRS practice — it stops a
-  // first-ever session from dumping 50 unfamiliar facts on the student at
-  // once, which is worse for retention than a steady daily trickle.
+  // A new session deliberately rebuilds from the latest progress. Without
+  // sessionId, “Study again” re-used the old memoized queue and immediately
+  // repeated cards that had just been scheduled for tomorrow or later.
   const queue = useMemo(() => {
     if (!hydrated) return [];
-    const due: Flashcard[] = [];
-    const fresh: Flashcard[] = [];
-    for (const card of cards) {
-      const progress = state.flashcardProgress[card.id];
-      if (!progress) fresh.push(card);
-      else if (isDue(progress)) due.push(card);
-    }
-    return shuffle([...shuffle(due), ...shuffle(fresh).slice(0, NEW_CARDS_PER_SESSION)]);
+    return buildQueue(cards, state.flashcardProgress);
+    // A session intentionally uses a snapshot of progress. Do not add
+    // state.flashcardProgress here: each grade updates that state, which would
+    // reshuffle the queue mid-session and could skip or repeat cards.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated]);
+  }, [cards, hydrated, sessionId]);
 
   if (!hydrated) return null;
 
@@ -81,125 +98,124 @@ export function FlashcardReview({
   const current = queue[queueIndex];
   const done = queueIndex >= total;
 
+  const startNewSession = () => {
+    setQueueIndex(0);
+    setRevealed(false);
+    setTally({ again: 0, hard: 0, good: 0, easy: 0 });
+    setSessionId((id) => id + 1);
+  };
+
   if (total === 0) {
     return (
-      <Card className="flex flex-col items-center text-center gap-3 px-8 py-16">
-        <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-signal-light text-signal">
-          <Sparkles size={20} />
-        </div>
-        <h3 className="font-display text-lg font-semibold text-graphite dark:text-paper">
-          All caught up
-        </h3>
-        <p className="text-sm text-slate leading-relaxed max-w-sm">
-          No cards are due right now. Come back once new cards are scheduled, or once today's
-          reviews come round again.
+      <Card className="p-8 text-center">
+        <Sparkles
+          className="mx-auto mb-3 h-7 w-7"
+          style={{ color: topicColorHex }}
+          aria-hidden="true"
+        />
+        <h2 className="text-xl font-semibold">All caught up</h2>
+        <p className="mt-2 text-slate">
+          No cards are due right now. Come back when your next reviews are
+          scheduled.
         </p>
       </Card>
     );
   }
 
   if (done) {
-    const reviewed = tally.again + tally.hard + tally.good + tally.easy;
+    const reviewed = GRADES.reduce((sum, grade) => sum + tally[grade], 0);
     return (
-      <Card className="flex flex-col items-center text-center gap-4 px-8 py-16">
-        <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-signal-light text-signal">
-          <Sparkles size={20} />
+      <Card className="p-8 text-center">
+        <Sparkles
+          className="mx-auto mb-3 h-7 w-7"
+          style={{ color: topicColorHex }}
+          aria-hidden="true"
+        />
+        <h2 className="text-xl font-semibold">Session complete</h2>
+        <p className="mt-2 text-slate">
+          You reviewed {reviewed} card{reviewed === 1 ? "" : "s"}. Harder cards
+          will return sooner.
+        </p>
+        <div className="mt-5 flex flex-wrap justify-center gap-2 text-sm">
+          {GRADES.map((grade) => (
+            <Badge key={grade} tone="neutral">
+              {tally[grade]} {grade}
+            </Badge>
+          ))}
         </div>
-        <div className="space-y-1.5">
-          <h3 className="font-display text-lg font-semibold text-graphite dark:text-paper">
-            Session complete
-          </h3>
-          <p className="text-sm text-slate leading-relaxed max-w-sm">
-            You reviewed {reviewed} card{reviewed === 1 ? "" : "s"}. Cards you found harder will
-            come back sooner than the ones you knew well.
-          </p>
-        </div>
-        <div className="flex gap-2 flex-wrap justify-center">
-          <Badge tone="danger">{tally.again} again</Badge>
-          <Badge tone="amber">{tally.hard} hard</Badge>
-          <Badge tone="cobalt">{tally.good} good</Badge>
-          <Badge tone="signal">{tally.easy} easy</Badge>
-        </div>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            setQueueIndex(0);
-            setRevealed(false);
-            setTally({ again: 0, hard: 0, good: 0, easy: 0 });
-          }}
-        >
-          <RotateCcw size={14} />
+        <Button type="button" className="mt-6" onClick={startNewSession}>
+          <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Study again
         </Button>
       </Card>
     );
   }
 
-  function handleGrade(grade: ReviewGrade) {
+  const handleGrade = (grade: ReviewGrade) => {
     reviewFlashcard(current.id, grade);
-    setTally((t) => ({ ...t, [grade]: t[grade] + 1 }));
+    setTally((previous) => ({ ...previous, [grade]: previous[grade] + 1 }));
     setRevealed(false);
-    setQueueIndex((i) => i + 1);
-  }
+    setQueueIndex((index) => index + 1);
+  };
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wide text-slate">
+    <section aria-live="polite">
+      <div className="mb-4 flex items-center justify-between text-sm text-slate">
+        <span>
           Card {queueIndex + 1} of {total}
-        </p>
+        </span>
         <Badge tone="neutral">{current.subpoint}</Badge>
       </div>
-
-      <div className="h-1 w-full rounded-full bg-graphite/[0.06] dark:bg-white/10 overflow-hidden">
+      <div className="mb-5 h-1.5 overflow-hidden rounded bg-graphite/10 dark:bg-white/10">
         <div
-          className="h-full rounded-full transition-all"
-          style={{ width: `${(queueIndex / total) * 100}%`, backgroundColor: topicColorHex }}
+          className="h-full rounded transition-all"
+          style={{
+            width: `${((queueIndex + 1) / total) * 100}%`,
+            backgroundColor: topicColorHex,
+          }}
         />
       </div>
-
-      <Card className="p-8 min-h-[240px] flex flex-col">
-        <span
-          className="self-start text-xs font-medium uppercase tracking-wide px-2 py-0.5 rounded-xs mb-5"
-          style={{ backgroundColor: `${topicColorHex}1A`, color: topicColorHex }}
-        >
-          {typeLabel[current.type]}
-        </span>
-
-        <p className="text-base text-graphite dark:text-paper leading-relaxed font-medium flex-1">
+      <Card className="min-h-72 p-6 sm:p-8">
+        <Badge tone="neutral">{typeLabel[current.type]}</Badge>
+        <p className="mt-8 text-xl font-medium leading-relaxed">
           {current.front}
         </p>
-
         {revealed && (
-          <div className="mt-6 pt-6 border-t border-graphite/10 dark:border-white/10">
-            <p className="text-sm text-slate leading-relaxed">{current.back}</p>
-          </div>
+          <p className="mt-8 border-t border-graphite/10 pt-6 text-base leading-relaxed text-slate dark:border-white/15">
+            {current.back}
+          </p>
         )}
       </Card>
-
       {!revealed ? (
-        <Button variant="primary" onClick={() => setRevealed(true)} className="self-center px-10">
-          Show answer
-        </Button>
+        <div className="mt-6 text-center">
+          <Button
+            type="button"
+            className="px-10"
+            onClick={() => setRevealed(true)}
+          >
+            Show answer
+          </Button>
+        </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {(["again", "hard", "good", "easy"] as ReviewGrade[]).map((grade) => (
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {GRADES.map((grade) => (
             <button
               key={grade}
+              type="button"
               onClick={() => handleGrade(grade)}
               className={clsx(
-                "flex flex-col items-center gap-0.5 rounded-sm px-3 py-3 text-sm font-medium transition-colors",
-                gradeStyles[grade]
+                "flex min-h-16 flex-col items-center justify-center rounded-sm px-3 py-3 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cobalt focus:ring-offset-2",
+                gradeStyles[grade],
               )}
             >
               <span>{gradeLabel[grade]}</span>
-              <span className="text-xs opacity-70">
+              <span className="mt-0.5 text-xs opacity-80">
                 {previewInterval(state.flashcardProgress[current.id], grade)}
               </span>
             </button>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
