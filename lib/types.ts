@@ -102,3 +102,55 @@ export interface TopicMastery {
   masteryPercent: number;
   lastReviewed: string | null;
 }
+
+/* ---------------------------------------------------------------------- */
+/* Question bank & AI marking                                              */
+/* ---------------------------------------------------------------------- */
+
+export type AssessmentObjective = "AO1" | "AO2" | "AO3";
+export type QuestionTier = "Foundation" | "Higher" | "Both";
+export type GradeBand = "4-6" | "6-7" | "7-9";
+export type PartType = "multiple-choice" | "free-response";
+
+/** One point on an official-style mark scheme. `marks` is almost always 1
+ *  — AQA mark schemes are written as a list of separately-awardable
+ *  points — but is kept as a number so a single point can occasionally
+ *  carry 2 marks where AQA schemes do that (e.g. "correct method AND
+ *  correct answer" collapsed to one point). */
+export interface MarkPoint {
+  point: string;
+  marks: number;
+}
+
+export interface QuestionPart {
+  id: string; // unique across the whole bank, e.g. "4.1.1.1-Q1-b"
+  label?: string; // "a)", "b)", ... omitted for single-part questions
+  prompt: string;
+  type: PartType;
+  marks: number;
+  options?: string[]; // multiple-choice only
+  correctOption?: number; // index into options, multiple-choice only
+  markScheme?: MarkPoint[]; // free-response only, must sum to `marks`
+  modelAnswer?: string; // free-response only, shown after marking
+}
+
+export interface ExamQuestion {
+  id: string;
+  topicCode: string; // e.g. "4.1"
+  subpoint: string; // e.g. "4.1.1.1"
+  gradeBand: GradeBand;
+  assessmentObjective: AssessmentObjective;
+  tier: QuestionTier;
+  context?: string; // scene-setting text shown above part (a), e.g. "Figure 1 shows..."
+  totalMarks: number; // must equal the sum of part marks
+  parts: QuestionPart[];
+  examTip?: string;
+}
+
+/** Response shape returned by POST /api/mark-answer. */
+export interface AiMarkResult {
+  marksAwarded: number;
+  maxMarks: number;
+  matchedPoints: string[];
+  feedback: string;
+}
